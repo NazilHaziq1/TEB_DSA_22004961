@@ -1,0 +1,87 @@
+// Muhammad Nazil Haziq bin Mohd Nizar
+//22004961
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class NameQueue {
+private:
+    static const int MAX_SIZE = 100;
+    string names[MAX_SIZE];
+    int start;
+    int end;
+
+public:
+    NameQueue() {
+        start = -1;
+        end = -1;
+    }
+
+    void add(string person) {
+        if (end == MAX_SIZE - 1) {
+            cout << "Queue is full. Cannot add more elements." << endl;
+            return;
+        }
+
+        if (start == -1) {
+            start = 0;
+        }
+
+        end++;
+        names[end] = person;
+    }
+
+    void remove() {
+        if (isEmpty()) {
+            cout << "Queue is empty. Nothing to remove." << endl;
+            return;
+        }
+
+        cout << "Removed: " << names[start] << endl;
+
+        if (start == end) {
+            start = -1;
+            end = -1;
+        } else {
+            start++;
+        }
+    }
+
+    void show() const {
+        if (isEmpty()) {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+
+        for (int i = start; i <= end; ++i) {
+            cout << names[i] << " -> ";
+        }
+        cout << "NULL" << endl;
+    }
+
+    bool isEmpty() const {
+        return start == -1 || start > end;
+    }
+};
+
+int main() {
+    cout << "Name Queue Demo" << endl;
+
+    NameQueue queue;
+
+    queue.add("Ali");
+    queue.add("Ahmed");
+    queue.add("Alee");
+
+    cout << "Current Queue: ";
+    queue.show();
+
+    queue.remove();
+
+    cout << "Queue after removal: ";
+    queue.show();
+
+    return 0;
+}
