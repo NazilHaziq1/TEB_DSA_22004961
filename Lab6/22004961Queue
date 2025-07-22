@@ -1,0 +1,90 @@
+// Muhammad Nazil Haziq bin Mohd Nizar
+// 22004961
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class PersonNode {
+public:
+    string personName;
+    PersonNode* next;
+
+    PersonNode(string name) {
+        personName = name;
+        next = nullptr;
+    }
+};
+
+class NameQueue {
+private:
+    PersonNode* head;
+    PersonNode* tail;
+
+public:
+    NameQueue() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    // Add new person to the end of the queue
+    void add(string name) {
+        PersonNode* newPerson = new PersonNode(name);
+
+        if (head == nullptr) {
+            head = newPerson;
+            tail = newPerson;
+        } else {
+            tail->next = newPerson;
+            tail = newPerson;
+        }
+    }
+
+    // Remove the person at the front
+    void remove() {
+        if (head == nullptr) {
+            cout << "Queue is empty. Nothing to remove." << endl;
+            return;
+        }
+
+        PersonNode* temp = head;
+        head = head->next;
+
+        cout << "Removed: " << temp->personName << endl;
+        delete temp;
+
+        if (head == nullptr) {
+            tail = nullptr; // Reset tail if queue is now empty
+        }
+    }
+
+    // Display the queue from front to rear
+    void show() const {
+        PersonNode* current = head;
+        while (current != nullptr) {
+            cout << current->personName << " -> ";
+            current = current->next;
+        }
+        cout << "NULL" << endl;
+    }
+};
+
+int main() {
+    cout << "Linked List Queue Demo" << endl;
+
+    NameQueue queue;
+
+    queue.add("Ali");
+    queue.add("Ahmed");
+    queue.add("Alee");
+
+    cout << "Current Queue: ";
+    queue.show();
+
+    queue.remove();
+
+    cout << "Queue after removal: ";
+    queue.show();
+
+    return 0;
+}
