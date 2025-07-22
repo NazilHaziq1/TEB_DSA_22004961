@@ -1,0 +1,104 @@
+// Muhammad Nazil Haziq bin Mohd Nizar
+// 22004961
+
+
+
+#include <iostream>
+#include <string>
+using namespace std;
+
+class PersonNode {
+public:
+    string personName;
+    PersonNode* next;
+
+    PersonNode(string name) {
+        personName = name;
+        next = nullptr;
+    }
+};
+
+class NameQueue {
+private:
+    PersonNode* head;
+    PersonNode* tail;
+
+public:
+    NameQueue() {
+        head = nullptr;
+        tail = nullptr;
+    }
+
+    // Insert at rear
+    void add(string name) {
+        PersonNode* newPerson = new PersonNode(name);
+
+        if (head == nullptr) {
+            head = newPerson;
+            tail = newPerson;
+            tail->next = head; // circular link
+        } else {
+            tail->next = newPerson;
+            tail = newPerson;
+            tail->next = head; // maintain circular link
+        }
+    }
+
+    // Remove from front
+    void remove() {
+        if (head == nullptr) {
+            cout << "Queue is empty. Cannot remove." << endl;
+            return;
+        }
+
+        PersonNode* temp = head;
+
+        if (head == tail) {
+            // Only one node
+            head = nullptr;
+            tail = nullptr;
+        } else {
+            head = head->next;
+            tail->next = head;
+        }
+
+        cout << "Removed: " << temp->personName << endl;
+        delete temp;
+    }
+
+    // Display the entire queue
+    void show() {
+        if (head == nullptr) {
+            cout << "Queue is empty." << endl;
+            return;
+        }
+
+        PersonNode* current = head;
+        do {
+            cout << current->personName << " -> ";
+            current = current->next;
+        } while (current != head);
+        cout << "HEAD" << endl;
+    }
+};
+
+int main() {
+    cout << "Circular Linked List Queue Demo" << endl;
+
+    NameQueue queue;
+
+    queue.add("Ali");
+    queue.add("Ahmed");
+    queue.add("Alee");
+    queue.add("Uyah");
+
+    cout << "Current Queue: ";
+    queue.show();
+
+    queue.remove();
+
+    cout << "Queue after removal: ";
+    queue.show();
+
+    return 0;
+}
